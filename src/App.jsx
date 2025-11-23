@@ -70,7 +70,7 @@ function App() {
       <main className="main-content">
         <div className="content-container">
           <Hero />
-          <VideoBanner />
+          {/* <VideoBanner /> */}
           <CustomerSection statsRef={statsRef} />
           <FeaturesSection featuresRef={featuresRef} />
         </div>

@@ -151,6 +151,15 @@ export const Hero = () => {
             Build pipeline smarter, close deals faster, and simplify your tech stack with a unified platform built for modern sales and marketing teams.
           </p>
           
+          <div className="founder-note" role="note" aria-label="Founder's note">
+            
+            <blockquote className="founder-quote">
+              “Neurai eliminates repetitive work so companies can operate faster and leaner.
+              Our automations save 20–40 workhours per employee every month—cutting thousands in costs while boosting performance at scale.”
+            </blockquote>
+            <cite className="founder-attrib">— Neurai Founders</cite>
+          </div>
+          
           <div className="contact-section">
             <div className="contact-intro">
               <p>Have questions or want to see a demo? Our team is ready to help you scale.</p>

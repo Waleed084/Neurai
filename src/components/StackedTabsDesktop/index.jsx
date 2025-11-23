@@ -11,52 +11,54 @@ import img3 from '../../assets/stackedtabs/image (3).webp';
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
+// Neurai Tabs
 const tabs = [
-  { id: 'outbound', label: 'OUTBOUND' },
-  { id: 'inbound', label: 'INBOUND' },
-  { id: 'enrichment', label: 'DATA ENRICHMENT' },
-  { id: 'deals', label: 'DEAL EXECUTION' },
+  { id: 'workflow', label: 'WORKFLOW AUTOMATION' },
+  { id: 'ai-suggestions', label: 'AI SUGGESTIONS' },
+  { id: 'orchestration', label: 'TASK ORCHESTRATION' },
+  { id: 'dashboards', label: 'SMART DASHBOARDS' },
 ];
 
+// Neurai Tab Content
 const content = [
   {
-    id: 'outbound',
-    title: 'Turn hours of prospecting into minutes',
+    id: 'workflow',
+    title: 'Automate repetitive operations end-to-end',
     bullets: [
-      'AI-powered multichannel campaigns in one click',
-      'Built-in email deliverability guardrails',
-      'Prioritized task lists to maximize selling',
-      'Workflow automations to identify and scale what works',
+      'Auto-execute daily, weekly, and event-based workflows',
+      'Connect apps like Slack, Notion, Airtable, Sheets, CRMs',
+      'Visual workflow builder with conditional logic',
+      'Zero manual steps for recurring tasks',
     ],
   },
   {
-    id: 'inbound',
-    title: 'Qualify and act on inbound leads in seconds',
+    id: 'ai-suggestions',
+    title: 'AI finds bottlenecks before you do',
     bullets: [
-      'Anonymous visitor identification',
-      'Real-time form enrichment',
-      'Instant routing with built-in scheduler',
-      'Automated nurture & follow-up sequences',
+      'Automated workflow suggestions based on usage patterns',
+      'Detects repetitive tasks across your organization',
+      'Recommends new automations instantly',
+      'One-click apply for suggested improvements',
     ],
   },
   {
-    id: 'enrichment',
-    title: 'Fuel smarter selling with always-fresh data',
+    id: 'orchestration',
+    title: 'Centralize how work flows across your company',
     bullets: [
-      '210M+ contacts and 30M+ companies',
-      'Verified emails & phone numbers',
-      'Better targeting and personalization',
-      'Clean data across your CRM',
+      'Assign, track, and automate complex multi-step processes',
+      'Trigger actions across apps from one platform',
+      'Automated reminders & follow-ups',
+      'Cross-team workflow collaboration',
     ],
   },
   {
-    id: 'deals',
-    title: 'Capture every conversation, accelerate every deal',
+    id: 'dashboards',
+    title: 'Your operations at a glance, fully automated',
     bullets: [
-      'Pre-meeting insights in seconds',
-      'AI-powered summaries and follow-ups',
-      'Pipeline boards & deal alerts',
-      'Performance dashboards for coaching',
+      'Automated reporting with real-time metrics',
+      'AI-generated insights, anomalies, and summaries',
+      'Custom dashboards for operations, finance, HR',
+      'No more spreadsheets—data syncs automatically',
     ],
   },
 ];
@@ -67,7 +69,7 @@ export default function StackedTabs() {
   const [activeIndex, setActiveIndex] = useState(0);
   const currentIndex = useRef(0);
 
-  // Set initial positions to avoid flicker
+  // Initial panel setup
   useEffect(() => {
     panelsRef.current.forEach((panel, i) => {
       gsap.set(panel, {
@@ -78,13 +80,13 @@ export default function StackedTabs() {
     });
   }, []);
 
+  // ScrollTrigger for stacking effect
   useEffect(() => {
     const section = sectionRef.current;
     const panels = panelsRef.current;
     if (!section) return;
 
     const total = panels.length;
-    
 
     ScrollTrigger.getAll().forEach((t) => t.kill());
 
@@ -93,21 +95,9 @@ export default function StackedTabs() {
 
       panels.forEach((p, i) => {
         if (i === index) {
-          gsap.to(p, {
-            yPercent: 0,
-            opacity: 1,
-            zIndex: 2,
-            duration: 0,
-            ease: 'none',
-          });
+          gsap.to(p, { yPercent: 0, opacity: 1, zIndex: 2, duration: 0, ease: 'none' });
         } else if (i === currentIndex.current) {
-          gsap.to(p, {
-            yPercent: direction > 0 ? -100 : 100,
-            opacity: 0,
-            zIndex: 1,
-            duration: 0,
-            ease: 'none',
-          });
+          gsap.to(p, { yPercent: direction > 0 ? -100 : 100, opacity: 0, zIndex: 1, duration: 0, ease: 'none' });
         } else {
           gsap.set(p, { yPercent: direction > 0 ? 100 : -100, opacity: 0, zIndex: 1 });
         }
@@ -117,13 +107,24 @@ export default function StackedTabs() {
       currentIndex.current = index;
     };
 
+    // Detect if desktop for special slide behavior
+    const isDesktop = window.innerWidth >= 768;
+
     ScrollTrigger.create({
       trigger: section,
       start: 'top top',
-      end: `+=${window.innerHeight * total}`,
+      end: `+=${window.innerHeight * (isDesktop ? total : total * 1.5)}`, // Adjust for touch scrolling
       pin: true,
       snap: {
-        snapTo: 1 / (total - 1),
+        snapTo: (progress) => {
+          if (isDesktop) {
+            // Snap 1-by-1 for desktop
+            return Math.round(progress * (total - 1)) / (total - 1);
+          } else {
+            // On mobile, allow smooth swipe for 2-3-4 tabs
+            return progress;
+          }
+        },
         duration: 0.3,
         ease: 'power1.inOut',
       },
@@ -140,30 +141,19 @@ export default function StackedTabs() {
     return () => ScrollTrigger.getAll().forEach((t) => t.kill());
   }, []);
 
+  // Tab click
   const handleTabClick = (index) => {
     if (index === currentIndex.current) return;
-    
+
     const direction = index > currentIndex.current ? 1 : -1;
     panelsRef.current.forEach((p, i) => {
       if (i === index) {
-        gsap.to(p, {
-          yPercent: 0,
-          opacity: 1,
-          zIndex: 2,
-          duration: 0.3,
-          ease: 'none',
-        });
+        gsap.to(p, { yPercent: 0, opacity: 1, zIndex: 2, duration: 0.3, ease: 'none' });
       } else {
-        gsap.to(p, {
-          yPercent: direction > 0 ? -100 : 100,
-          opacity: 0,
-          zIndex: 1,
-          duration: 0.2,
-          ease: 'none',
-        });
+        gsap.to(p, { yPercent: direction > 0 ? -100 : 100, opacity: 0, zIndex: 1, duration: 0.2, ease: 'none' });
       }
     });
-    
+
     setActiveIndex(index);
     currentIndex.current = index;
   };
@@ -171,12 +161,12 @@ export default function StackedTabs() {
   return (
     <section ref={sectionRef} className="relative overflow-hidden w-full bg-white dark:bg-slate-900">
       {/* Sticky Tabs */}
-      <div className="sticky top-[64px] md:top-[64px] z-[50] bg-white/95 dark:bg-slate-900/95 backdrop-blur-md overflow-x-auto overflow-y-hidden w-full no-scrollbar border-b border-gray-200 dark:border-slate-700">
+      <div className="sticky top-[64px] z-[50] bg-white/95 dark:bg-slate-900/95 backdrop-blur-md overflow-x-auto overflow-y-hidden w-full no-scrollbar border-b border-gray-200 dark:border-slate-700">
         <div className="flex flex-nowrap justify-start md:justify-center px-4 py-3 gap-2 xs:gap-3 sm:gap-4 max-w-[100vw]">
           {tabs.map((t, i) => (
             <button
               key={t.id}
-              className={` rounded-md font-medium border transition-all duration-300 text-nowrap px-4 py-3 text-[10px] uppercase leading-[120%] md:px-5 md:py-3 md:text-[12px] ${
+              className={`rounded-md font-medium border transition-all duration-300 text-nowrap px-4 py-3 text-[10px] uppercase leading-[120%] md:px-5 md:py-3 md:text-[12px] ${
                 activeIndex === i
                   ? 'bg-cyan-200/80 dark:bg-cyan-400/20 text-black dark:text-cyan-300 border-cyan-300 dark:border-cyan-400'
                   : 'bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-gray-300 border-transparent hover:bg-white dark:hover:bg-slate-700 hover:shadow-glow hover:-translate-y-[2px]'
