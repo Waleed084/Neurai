@@ -1,31 +1,31 @@
 import React from 'react';
 import './PeopleCards.css';
 
-import a0 from '../../assets/peoplecard/image.webp';
-import a1 from '../../assets/peoplecard/image (1).webp';
-import a2 from '../../assets/peoplecard/image (2).webp';
-import a3 from '../../assets/peoplecard/image (3).webp';
-import a4 from '../../assets/peoplecard/image (4).webp';
+import a0 from '../../assets/peoplecard/1.webp';
+import a1 from '../../assets/peoplecard/2.webp';
+import a2 from '../../assets/peoplecard/3.webp';
+import a3 from '../../assets/peoplecard/4.webp';
+import a4 from '../../assets/peoplecard/5.webp';
 
 const customers = [
   {
     name: 'Nicole Ramos',
-    title: 'Head of Sales',
+    title: 'Account Executive',
     company: 'TechNova',
     avatar: a0,
     excerpt:
-      "Nicole automated lead prospecting with Neurai, saving 15 hours per week per rep and boosting deals without adding headcount.",
-    metric: '15h',
+      "Automated prospecting with Neurai—saving 15 hours per week per rep and boosting pipeline instantly.",
+    metric: '15',
     metricLabel: 'hours saved/week',
   },
   {
     name: 'Diego Fernandez',
-    title: 'Account Executive',
+    title: 'Head Sales',
     company: 'BrightPath',
     avatar: a1,
     excerpt:
-      "Diego reduced manual lead routing by 30 hours/month using Neurai’s automation.",
-    metric: '30h',
+      "Saved 50 hours of manual lead routing each month with Neurai’s automated workflows.",
+    metric: '50',
     metricLabel: 'hours saved/month',
   },
   {
@@ -34,18 +34,18 @@ const customers = [
     company: 'Cytera',
     avatar: a2,
     excerpt:
-      "Anna’s team increased connection rates by 36% while cutting 10 hours/week in repetitive tasks.",
+      "Increased connection rates by 36% while eliminating 20 hours of repetitive weekly tasks.",
     metric: '36%',
     metricLabel: 'connection rate',
   },
   {
-    name: 'Mark Turner',
-    title: 'VP of Revenue Ops',
-    company: 'BuildSmart',
+    name: 'Raghav Malhotra',
+    title: 'Head of Revenue Operations',
+    company: 'IndiSync',
     avatar: a3,
     excerpt:
-      "Mark cut manual reporting by 20 hours/week with Neurai dashboards.",
-    metric: '20h',
+      "Replaced manual reporting with auto-generated insights, saving 18 hours every week.",
+    metric: '18',
     metricLabel: 'hours saved/week',
   },
   {
@@ -54,11 +54,12 @@ const customers = [
     company: 'CensusLab',
     avatar: a4,
     excerpt:
-      "Sylvia saved 12 hours/week per rep by automating follow-ups and task orchestration.",
-    metric: '12h',
+      "Automated follow-ups and task orchestration, saving her reps 12 hours each week.",
+    metric: '12',
     metricLabel: 'hours saved/week',
   },
 ];
+
 
 export default function PeopleCards() {
   return (
@@ -84,9 +85,6 @@ export default function PeopleCards() {
                 </div>
               </div>
               <div className="card-body">
-                <div className="card-meta">
-                  <div className="company">{c.company}</div>
-                </div>
                 <h3 className="person-name">{c.name}</h3>
                 <div className="person-title">{c.title}</div>
               </div>

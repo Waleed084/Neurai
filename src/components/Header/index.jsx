@@ -12,16 +12,16 @@ export const DesktopHeader = () => {
           <img src="logo neurai.svg" alt="NeurAI" className="logo" />
           <div className="header-text" ></div>  
                   <nav className="nav-links">
-            <a href="#">Solutions</a>
-            <a href="#">Roles</a>
-            <a href="#">Resources</a>
-            <a href="#">Pricing</a>
-          </nav>
+                    <a href="#solutions">Solutions</a>
+                    {/* <a href="#">Roles</a> */}
+                    <a href="#">Resources</a>
+                    <a href="#faq-q4">Pricing</a>
+                  </nav>
         </div>
         <div className="header-right">
-          <a href="#" className="login-link">Log in</a>
-          <button className="demo-button">Get a demo</button>
-          <button className="signup-button">Sign up for free</button>
+          {/* <a href="#" className="login-link">Log in</a> */}
+          {/* <button className="demo-button">Get a demo</button> */}
+          <button className="signup-button">Get a Demo</button>
         </div>
       </div>
     </header>

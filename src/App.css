@@ -38,6 +38,14 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* Smooth scrolling for in-page anchors */
+html { scroll-behavior: smooth; }
+
+/* Ensure anchored section is visible below the fixed header */
+#solutions { scroll-margin-top: calc(var(--header-height) + 12px); }
+/* Ensure FAQ anchor aligns below fixed header */
+#faq-q4 { scroll-margin-top: calc(var(--header-height) + 12px); }
+
 .app-container {
   min-height: 100vh;
   display: flex;
@@ -63,6 +71,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative; /* allow centering nav absolutely */
 }
 
 .header-left {
@@ -284,6 +293,11 @@ body {
 .nav-links {
   display: flex;
   gap: 32px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .nav-links a {
@@ -781,6 +795,16 @@ body {
   .signup-section {
     flex-direction: column;
     justify-content: center;
+
+  /* On smaller screens, let nav flow normally (stack) */
+  .nav-links {
+    position: static;
+    transform: none;
+    top: auto;
+    left: auto;
+    gap: 16px;
+    justify-content: center;
+  }
     align-items: center;
     gap: 1rem;
     max-width: 820px;

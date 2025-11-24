@@ -148,7 +148,7 @@ export const Hero = () => {
         <div className="hero-content">
           <h1>Dynamic Workflow. Hyper Growth</h1>
           <p className="subtitle">
-            Build pipeline smarter, close deals faster, and simplify your tech stack with a unified platform built for modern sales and marketing teams.
+            Every workflow, optimized. Every task, on autopilot.
           </p>
           
           <div className="founder-note" role="note" aria-label="Founder's note">
@@ -190,7 +190,7 @@ export const Hero = () => {
               </form>
             </div>
 
-            <p className="hero-terms">Prefer email? Reach us at <a href="mailto:hello@apollo.com">hello@apollo.com</a>.</p>
+            <p className="hero-terms">Prefer email? Reach us at <a href="mailto:support@neurai.agency">support@neurai.agency</a>.</p>
           </div>
         </div>
       </div>

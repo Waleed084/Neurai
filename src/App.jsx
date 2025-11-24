@@ -76,7 +76,7 @@ function App() {
         </div>
         
         <div className="second-container">
-          <div className="w-full">
+          <div className="w-full" id="solutions">
             {/* Desktop-only (lg and up) */}
             <div className="hidden md:block">
               <StackedTabsDesktop />
