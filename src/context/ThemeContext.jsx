@@ -3,28 +3,22 @@ import { createContext, useContext, useEffect, useState } from 'react';
 const ThemeContext = createContext();
 
 export function ThemeProvider({ children }) {
-  const [isDark, setIsDark] = useState(() => {
-    // Check localStorage first
-    const saved = localStorage.getItem('theme');
-    if (saved) {
-      return saved === 'dark';
-    }
-    // Fall back to system preference
-    return window.matchMedia('(prefers-color-scheme: dark)').matches;
-  });
+  // Force dark mode across the app. Do not allow switching off.
+  const [isDark, setIsDark] = useState(() => true);
 
   useEffect(() => {
     const root = document.documentElement;
-    if (isDark) {
-      root.classList.add('dark');
+    // Always ensure the dark class is present
+    root.classList.add('dark');
+    try {
       localStorage.setItem('theme', 'dark');
-    } else {
-      root.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
+    } catch (e) {
+      // ignore storage errors
     }
   }, [isDark]);
 
-  const toggleTheme = () => setIsDark(!isDark);
+  // Toggle is disabled because dark mode is enforced.
+  const toggleTheme = () => { /* no-op: dark mode enforced */ };
 
   return (
     <ThemeContext.Provider value={{ isDark, toggleTheme }}>

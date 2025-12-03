@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useTheme } from '../../context/ThemeContext';
 import './Hero.css';
 
@@ -118,41 +118,101 @@ export const Hero = () => {
     };
   }, []);
 
+  const handleContactSubmit = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const name = form.name?.value || '';
+    const email = form.email?.value || '';
+    const company = form.company?.value || '';
+    const message = form.message?.value || '';
+
+    // Fallback behavior: open the user's mail client with a prefilled message
+    const subject = `Website contact request from ${name || email}`;
+    const body = `Name: ${name}\nEmail: ${email}\nCompany: ${company}\n\nMessage:\n${message}`;
+    window.location.href = `mailto:hello@apollo.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  };
+
+  const [isFormOpen, setIsFormOpen] = useState(false);
+  const nameInputRef = useRef(null);
+
+  const openContactForm = () => {
+    setIsFormOpen(true);
+    // autofocus after opening (allow CSS transition to start)
+    setTimeout(() => nameInputRef.current?.focus(), 180);
+  };
+
+  // Open the contact form automatically when navigating to #contact
+  useEffect(() => {
+    const openIfHash = () => {
+      try {
+        if (window.location.hash === '#contact') {
+          openContactForm();
+        }
+      } catch (err) {
+        // ignore
+      }
+    };
+
+    openIfHash();
+    window.addEventListener('hashchange', openIfHash);
+    return () => window.removeEventListener('hashchange', openIfHash);
+  }, []);
+
   return (
     <div className="hero-wrapper">
       <div className="hero-container">
         <div id="hero-particles" className="hero-particles-layer" aria-hidden="true"></div>
         <div className="hero-content">
-          <h1>The AI sales platform for smarter, faster revenue growth</h1>
+          <h1>Dynamic Workflow. Hyper Growth</h1>
           <p className="subtitle">
-            Build pipeline smarter, close deals faster, and simplify your tech stack with a unified platform built for modern sales and marketing teams.
+            Every workflow, optimized. Every task, on autopilot.
           </p>
           
-          <div className="signup-section">
-            <div className="signup-form">
-              <input 
-                type="email" 
-                placeholder="Enter email" 
-                className="email-input" 
-              />
-              <button className="signup-button">Sign up for free</button>
+          <div className="founder-note" role="note" aria-label="Founder's note">
+            
+            <blockquote className="founder-quote">
+              “Neurai eliminates repetitive work so companies can operate faster and leaner.
+              Our automations save 20–40 workhours per employee every month—cutting thousands in costs while boosting performance at scale.”
+            </blockquote>
+            <cite className="founder-attrib">— Neurai Founders</cite>
+          </div>
+          
+          <div id="contact" className="contact-section">
+            <div className="contact-intro">
+              <p>Have questions or want to see a demo? Our team is ready to help you scale.</p>
             </div>
 
-            <div className="alternative-signup">
-              <div className="or-line"><span>or</span></div>
-              <div className="social-buttons">
-                <button className="social-button google-signup">
-                  <img src="/google.svg" alt="Google" />
-                  <span>Sign up with Google</span>
-                </button>
-                <button className="social-button microsoft-signup">
-                  <img src="/microsoft-svgrepo-com.svg" alt="Microsoft" />
-                  <span>Sign up with Microsoft</span>
-                </button>
-              </div>
+            {/* CTA toggle always visible — icon animates between stacks and cross */}
+            <div className="contact-cta">
+              <button
+                type="button"
+                className={`contact-button toggle ${isFormOpen ? 'open' : ''}`}
+                onClick={() => setIsFormOpen((s) => !s)}
+                aria-expanded={isFormOpen}
+                aria-controls="contact"
+              >
+                <span className="contact-icon" aria-hidden></span>
+                <span className="contact-label">Contact Sales</span>
+              </button>
             </div>
 
-            <p className="hero-terms">By signing up, I agree to Apollo's <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.</p>
+            {/* Collapsible form wrapper with transition */}
+            <div className={`contact-form-wrapper ${isFormOpen ? 'open' : ''}`} aria-hidden={!isFormOpen}>
+              <form className="contact-form" onSubmit={handleContactSubmit}>
+                <input ref={nameInputRef} name="name" type="text" placeholder="Full name" className="contact-input" />
+                <input name="email" type="email" placeholder="Work email" className="contact-input" />
+                <input name="company" type="text" placeholder="Company" className="contact-input" />
+                <textarea name="message" placeholder="How can we help?" className="contact-textarea" rows="3" />
+                <div style={{ display: 'flex', gap: '0.5rem' }}>
+                  <button type="submit" className="contact-button">Send to Sales</button>
+                  <button type="button" className="contact-button" onClick={() => setIsFormOpen(false)} style={{ background: 'transparent', border: '1px solid var(--border-color)', color: 'var(--text-black)', boxShadow: 'none' }}>
+                    Cancel
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <p className="hero-terms">Prefer email? Reach us at <a href="mailto:support@neurai.agency">support@neurai.agency</a>.</p>
           </div>
         </div>
       </div>

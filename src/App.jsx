@@ -64,19 +64,19 @@ function App() {
 
   return (
     <div className="app-container">
-        <Header onToggleDrawer={toggleDrawer} />
+        <Header onToggleDrawer={toggleDrawer} isDrawerOpen={isDrawerOpen} />
       <Drawer isOpen={isDrawerOpen} onClose={toggleDrawer} />
       
       <main className="main-content">
         <div className="content-container">
           <Hero />
-          <VideoBanner />
+          {/* <VideoBanner /> */}
           <CustomerSection statsRef={statsRef} />
           <FeaturesSection featuresRef={featuresRef} />
         </div>
         
         <div className="second-container">
-          <div className="w-full">
+          <div className="w-full" id="solutions">
             {/* Desktop-only (lg and up) */}
             <div className="hidden md:block">
               <StackedTabsDesktop />
